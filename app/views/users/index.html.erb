@@ -1,0 +1,11 @@
+<h1>Users<h1>
+<ul class="list-group list-group-flush">
+    <% @users.each do |user| %>
+        <li class="list-group-item">
+            <span><%= user.first_name %></span>
+            <span><%= user.email %></span>
+            <%= link_to 'Show', user_path(user), class: 'btn btn-primary'%>
+        </li>
+    <% end %>
+</ul>
+

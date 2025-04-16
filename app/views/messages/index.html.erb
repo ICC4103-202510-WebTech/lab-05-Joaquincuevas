@@ -1,0 +1,10 @@
+<h1>Messages<h1>
+<ul class="list-group list-group-flush">
+    <% @messages.each do |message| %>
+        <li class="list-group-item">
+            <span><%= message.chat_id %></span>
+            <span><%= message.user_id %></span>
+            <%= link_to 'Show', message_path(message), class: 'btn btn-primary'%>
+        </li>
+    <% end %>
+</ul>

@@ -1,0 +1,10 @@
+<h1>Chats<h1>
+<ul class="list-group list-group-flush">
+    <% @chats.each do |chat| %>
+        <li class="list-group-item">
+            <span><%= chat.sender_id %></span>
+            <span><%= chat.receiver_id %></span>
+            <%= link_to 'Show', chat_path(chat), class: 'btn btn-primary'%>
+        </li>
+    <% end %>
+</ul>
