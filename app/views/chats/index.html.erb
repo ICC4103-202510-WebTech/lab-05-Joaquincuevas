@@ -1,4 +1,8 @@
 <h1>Chats<h1>
+
+<%= link_to 'New Chat', new_chat_path, class: 'btn btn-success mb-3' %>
+
+
 <ul class="list-group list-group-flush">
     <% @chats.each do |chat| %>
         <li class="list-group-item">
