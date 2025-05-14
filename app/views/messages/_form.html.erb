@@ -11,22 +11,34 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
+  <div class="mb-3">
+    <%= form.label :body, class: "form-label" %>
+    <%= form.text_area :body, class: "form-control", rows: 4 %>
+    <% if message.errors[:body].any? %>
+      <div class="text-danger"><%= message.errors[:body].join(', ') %></div>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.collection_select :user_id, User.all, :id, :name %>
+  <div class="mb-3">
+    <%= form.label :user_id, "From User", class: "form-label" %>
+    <%= form.collection_select :user_id, User.all, :id, ->(user) { "#{user.first_name} #{user.last_name}" },
+        { prompt: "Select a user" }, { class: "form-select" } %>
+    <% if message.errors[:user_id].any? %>
+      <div class="text-danger"><%= message.errors[:user_id].join(', ') %></div>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.label :chat_id, style: "display: block" %>
-    <%= form.collection_select :chat_id, Chat.all, :id, :name %>
+  <div class="mb-3">
+    <%= form.label :chat_id, "In Chat", class: "form-label" %>
+    <%= form.collection_select :chat_id, Chat.all, :id,
+        ->(chat) { "Chat between #{chat.sender.first_name} and #{chat.receiver.first_name}" },
+        { prompt: "Select a chat" }, { class: "form-select" } %>
+    <% if message.errors[:chat_id].any? %>
+      <div class="text-danger"><%= message.errors[:chat_id].join(', ') %></div>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

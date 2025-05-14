@@ -8,6 +8,7 @@ class ChatsController < ApplicationController
     end
 
     def edit
+        @chat = Chat.find(params[:id])
     end
 
     def update
