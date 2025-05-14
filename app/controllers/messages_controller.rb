@@ -14,6 +14,14 @@ class MessagesController < ApplicationController
         @message = Message.new
     end
 
+    def update
+    if @message.update(message_params)
+        redirect_to @message, notice: "Message was successfully updated."
+    else
+        render :edit, status: :unprocessable_entity
+    end
+    end
+
     def create
         @message = Message.new(message_params)
         if @message.save

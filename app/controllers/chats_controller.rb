@@ -10,6 +10,14 @@ class ChatsController < ApplicationController
     def edit
     end
 
+    def update
+    if @chat.update(chat_params)
+        redirect_to @chat, notice: "Chat was successfully updated."
+    else
+        render :edit, status: :unprocessable_entity
+    end
+    end
+
     def new
         @chat = Chat.new
     end
