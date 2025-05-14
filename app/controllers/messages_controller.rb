@@ -7,6 +7,9 @@ class MessagesController < ApplicationController
         @message = Message.find(params[:id])
     end
 
+    def edit
+    end
+
     def new
         @message = Message.new
     end

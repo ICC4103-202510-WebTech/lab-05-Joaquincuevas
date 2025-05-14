@@ -1,3 +1,60 @@
-<span><%= @message.chat_id %></span>
-<span><%= @message.user_id %></span>
-<span><%= @message.body %></span>
+<div>
+  <p style="color: green"><%= notice %></p>
+
+  <div class="message-details">
+    <h1>Message</h1>
+
+    <div class="detail-section">
+      <h3>Content</h3>
+      <p><%= @message.body %></p>
+    </div>
+
+    <div class="detail-section">
+      <h3>User</h3>
+      <p>
+        <strong><%= link_to @message.user.first_name, user_path(@message.user) %></strong><br>
+        <small><%= @message.user.email %></small>
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Chat</h3>
+      <p>
+        <strong><%= link_to @message.chat.chat_id, chat_path(@message.chat) %></strong>
+        <% if @message.chat.description.present? %>
+          <br>
+          <small><%= @message.chat.description %></small>
+        <% end %>
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Timestamp</h3>
+      <p><%= @message.created_at.strftime("%B %d, %Y at %I:%M:%S %p") %></p>
+    </div>
+  </div>
+
+  <div>
+    <%= link_to "Edit this message", edit_message_path(@message) %> |
+    <%= link_to "Back to messages", messages_path %> |
+    <%= link_to "Go to Chat", chat_path(@message.chat) %>
+
+    <%= button_to "Delete this message", @message, method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>
+</div>
+
+<style>
+  .message-details {
+    margin-bottom: 30px;
+  }
+  .detail-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
+  .detail-section h3 {
+    margin-top: 0;
+    color: #495057;
+  }
+</style>
