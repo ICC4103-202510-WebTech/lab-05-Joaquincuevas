@@ -1,35 +1,58 @@
-<h1>New Message</h1>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="mb-0">New Message</h1>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @message, local: true, class: "needs-validation" do |form| %>
+            <% if @message.errors.any? %>
+              <div class="alert alert-danger">
+                <h4 class="alert-heading"><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h4>
+                <ul class="mb-0">
+                  <% @message.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-<%= form_with model: @message, local: true do |form| %>
-  <% if @message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
-      <ul>
-        <% @message.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+            <div class="mb-3">
+              <%= form.label :chat_id, "Select Chat", class: "form-label" %>
+              <%= form.collection_select :chat_id,
+                  Chat.all,
+                  :id,
+                  ->(chat) { "Between #{chat.sender&.first_name} and #{chat.receiver&.first_name}" },
+                  { prompt: "Choose a chat", selected: params[:chat_id] },
+                  { class: "form-select" }
+              %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :user_id, "Select Author", class: "form-label" %>
+              <%= form.collection_select :user_id,
+                  User.all,
+                  :id,
+                  ->(user) { "#{user.first_name} #{user.last_name} (#{user.email})" },
+                  { prompt: "Choose a user" },
+                  { class: "form-select" }
+              %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :body, "Message Body", class: "form-label" %>
+              <%= form.text_area :body, class: "form-control", rows: 5, placeholder: "Type your message here..." %>
+              <div class="form-text">Please be concise and clear in your message.</div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+              <%= link_to 'Back', messages_path, class: "btn btn-outline-secondary" %>
+              <%= form.submit "Create Message", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :chat_id, "Select Chat" %>
-    <%= form.collection_select :chat_id, Chat.all, :id, :id, prompt: "Choose a chat" %>
   </div>
-
-  <div>
-    <%= form.label :user_id, "Select Author" %>
-    <%= form.collection_select :user_id, User.all, :id, :email, prompt: "Choose a user" %>
-  </div>
-
-  <div>
-    <%= form.label :body, "Message Body" %>
-    <%= form.text_area :body %>
-  </div>
-
-  <div>
-    <%= form.submit "Create Message" %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', messages_path %>
+</div>

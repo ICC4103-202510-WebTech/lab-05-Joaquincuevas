@@ -1,30 +1,53 @@
-<h1>New Chat</h1>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="mb-0">New Chat</h1>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @chat, local: true, class: "needs-validation" do |form| %>
+            <% if @chat.errors.any? %>
+              <div class="alert alert-danger">
+                <h4 class="alert-heading"><%= pluralize(@chat.errors.count, "error") %> prohibited this chat from being saved:</h4>
+                <ul class="mb-0">
+                  <% @chat.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-<%= form_with model: @chat, local: true do |form| %>
-  <% if @chat.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@chat.errors.count, "error") %> prohibited this chat from being saved:</h2>
-      <ul>
-        <% @chat.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+            <div class="mb-3">
+              <%= form.label :sender_id, "Select Sender", class: "form-label" %>
+              <%= form.collection_select :sender_id,
+                  User.all,
+                  :id,
+                  ->(user) { "#{user.first_name} #{user.last_name} (#{user.email})" },
+                  { prompt: "Choose a sender" },
+                  { class: "form-select" }
+              %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :receiver_id, "Select Receiver", class: "form-label" %>
+              <%= form.collection_select :receiver_id,
+                  User.all,
+                  :id,
+                  ->(user) { "#{user.first_name} #{user.last_name} (#{user.email})" },
+                  { prompt: "Choose a receiver" },
+                  { class: "form-select" }
+              %>
+              <div class="form-text">The receiver will be able to see and respond to messages in this chat.</div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+              <%= link_to 'Back', chats_path, class: "btn btn-outline-secondary" %>
+              <%= form.submit "Create Chat", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :sender_id, "Select Sender" %>
-    <%= form.collection_select :sender_id, User.all, :id, :email, prompt: "Choose a sender" %>
   </div>
-
-  <div>
-    <%= form.label :receiver_id, "Select Receiver" %>
-    <%= form.collection_select :receiver_id, User.all, :id, :email, prompt: "Choose a receiver" %>
-  </div>
-
-  <div>
-    <%= form.submit "Create Chat" %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', chats_path %>
+</div>
