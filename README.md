@@ -1,4 +1,4 @@
-# lab-05
+# lab-09
 
 ## Create your first ruby and rails models
 
