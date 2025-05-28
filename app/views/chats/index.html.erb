@@ -32,7 +32,12 @@
           </div>
           <div class="btn-group">
             <%= link_to "View", chat_path(chat), class: "btn btn-sm btn-outline-primary" %>
-            <%= link_to "Edit", edit_chat_path(chat), class: "btn btn-sm btn-outline-secondary" %>
+            <% if can? :edit, chat %>
+              <%= link_to "Edit", edit_chat_path(chat), class: "btn btn-sm btn-outline-secondary" %>
+            <% end %>
+            <% if can? :destroy, chat %>
+              <%= link_to "Delete", chat_path(chat), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" %>
+            <% end %>
           </div>
         </div>
       <% end %>

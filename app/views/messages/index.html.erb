@@ -52,8 +52,11 @@
             <td>
               <div class="btn-group">
                 <%= link_to "View", message_path(message), class: "btn btn-sm btn-outline-primary" %>
-                <% if can? :edit, @message %>
+                <% if can? :edit, message %>
                   <%= link_to "Edit", edit_message_path(message), class: "btn btn-sm btn-outline-secondary" %>
+                <% end %>
+                <% if can? :destroy, message %>
+                  <%= link_to "Delete", message_path(message), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" %>
                 <% end %>
               </div>
             </td>
