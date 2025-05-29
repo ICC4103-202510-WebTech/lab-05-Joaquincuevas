@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @messages.each do |message| %>
+        <% @messages.select { |message| message.user_id == current_user.id }.each do |message| %>
           <tr>
             <td><%= message.body.truncate(50) %></td>
             <td>

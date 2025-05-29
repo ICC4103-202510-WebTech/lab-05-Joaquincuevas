@@ -1,46 +1,22 @@
-# lab-09
+## Lab 9 Changes and Implementations
 
-## Create your first ruby and rails models
+### User Authentication (Devise)
+- Integrated [Devise](https://github.com/heartcombo/devise) for user authentication.
+- Registration now requires first name, last name, and email.
+- Devise forms and shared links are styled with Bootstrap for a modern UI.
+- The navbar displays a "Log in" button for guests and a "Log out" button for authenticated users, both aligned to the right.
 
-In this evaluation, you will be asked to create the first models of your web application `Whats New` using Ruby on Rails.
+### Authorization (CanCanCan)
+- Added [CanCanCan](https://github.com/CanCanCommunity/cancancan) for authorization.
+- **Users** can only edit or delete their own profiles.
+- **Chats** can only be edited or deleted by users who are either the sender or receiver of the chat.
+- **Messages** can only be edited or deleted by the user who sent them.
+- All authorization checks are enforced both in controllers and views, so unauthorized actions and buttons are hidden from users who do not have permission.
 
-## Instructions
+### Bootstrap UI Enhancements
+- All forms, navigation bars, and action buttons have been updated to use Bootstrap classes for a consistent and responsive design.
+- Devise shared links and flash messages are styled for clarity and usability.
 
-### 1. Create models and database tables
-
-You will have to create at least 3 independent models (and tables). Later on the course we will learn to create associations between models, for the moment all models will be independent from each other.
-
-#### 1.1 Creation of the `User` model and database table
-
-Create the `User` models and respective database table with at least the following attributes:
-
-- `email` (of type `string`)
-- `first_name` (type `string`)
-- `last_name` (type `string`)
-- `created_at`` (type`datetime`)
-- `updated_at` (type `datetime`)
-
-#### 1.2 Creation of the `Chat` model and database table
-
-Create the `Chat` model and respective database table with the following attributes:
-
-- `sender_id` (of type `integer`)
-- `receiver_id` (type `integer`)
-- `created_at` (type `datetime`)
-- `updated_at` (type `datetime`)
-
-#### 1.3 Creation of the `Message` model and database table
-
-Create the `Message` model and respective database table with the following attributes:
-
-- `chat_id` (type `integer`)
-- `user_id` (type `integer`)
-- `body` (type `text`)
-- `created_at` (type `datetime`)
-- `updated_at` (type `datetime`)
-
-All attributes must be `NOT NULL` at the database level.
-
-### 2. Create dummy data
-
-Populate the `db/seeds.rb` file with at least 10 instances of each model. This file is used to populate the database with data using `create` statements and is executed by running `bin/rails db:seed`.
+### Security
+- All user input is validated.
+- Sensitive actions are protected by authentication and authorization checks.
