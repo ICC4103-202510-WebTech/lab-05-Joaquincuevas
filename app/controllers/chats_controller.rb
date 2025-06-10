@@ -1,7 +1,7 @@
 class ChatsController < ApplicationController
     before_action :authenticate_user!
     def index
-        @chats = Chat.all
+        @chats = Chat.for_user(current_user.id)
     end
 
     def show

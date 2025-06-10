@@ -1,4 +1,7 @@
 class Chat < ApplicationRecord
+    scope :for_user, ->(user_id) { where("sender_id = ? OR receiver_id = ?", user_id, user_id) }
+
+    # Associations
     has_many :messages
     belongs_to :sender, class_name: 'User', foreign_key: 'sender_id'
     belongs_to :receiver, class_name: 'User', foreign_key: 'receiver_id'

@@ -9,16 +9,19 @@
         <li class="nav-item">
           <%= link_to '𝚄𝚜𝚎𝚛', users_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item">
-          <%= link_to '𝙲𝚑𝚊𝚝𝚜', chats_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to '𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜', messages_path, class: 'nav-link' %>
-        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to '𝙼𝚢 𝙸𝚗𝚋𝚘𝚡', chats_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to '𝙼𝚎𝚜𝚜𝚊𝚐𝚎𝚜', messages_path, class: 'nav-link' %>
+          </li>
+        <% end %>
       </ul>
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
-          <li class="nav-item">
+          <li class="nav-item d-flex align-items-center">
+            <span class="me-2"><%= current_user.first_name %></span>
             <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger ms-2', form: { class: 'd-inline' } %>
           </li>
         <% else %>
