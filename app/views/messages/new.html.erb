@@ -21,21 +21,10 @@
             <div class="mb-3">
               <%= form.label :chat_id, "Select Chat", class: "form-label" %>
               <%= form.collection_select :chat_id,
-                  Chat.all,
+                  @chats,
                   :id,
                   ->(chat) { "Between #{chat.sender&.first_name} and #{chat.receiver&.first_name}" },
                   { prompt: "Choose a chat", selected: params[:chat_id] },
-                  { class: "form-select" }
-              %>
-            </div>
-
-            <div class="mb-3">
-              <%= form.label :user_id, "Select Author", class: "form-label" %>
-              <%= form.collection_select :user_id,
-                  User.all,
-                  :id,
-                  ->(user) { "#{user.first_name} #{user.last_name} (#{user.email})" },
-                  { prompt: "Choose a user" },
                   { class: "form-select" }
               %>
             </div>

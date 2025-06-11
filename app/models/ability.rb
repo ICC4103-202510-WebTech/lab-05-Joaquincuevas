@@ -11,5 +11,12 @@ class Ability
     can [:edit, :update, :destroy], Chat do |chat|
       chat.sender_id == user.id || chat.receiver_id == user.id
     end
+    can :select_as_sender, Chat, sender_id: user.id
+
+    can :create, Chat do |chat|
+      chat.receiver_id.present? && chat.receiver_id != user.id
+    end
+
+    can :read, User if user.admin?
   end
 end

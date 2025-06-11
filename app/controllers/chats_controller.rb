@@ -26,6 +26,8 @@ class ChatsController < ApplicationController
 
     def create
         @chat = Chat.new(chat_params)
+        @chat.sender_id = current_user.id
+        authorize! :create, @chat
         if @chat.save
             redirect_to @chat, notice: 'Chat was successfully created.'
         else
@@ -36,6 +38,6 @@ class ChatsController < ApplicationController
     private
 
     def chat_params
-        params.require(:chat).permit(:sender_id, :receiver_id)
+        params.require(:chat).permit(:receiver_id)
     end
 end

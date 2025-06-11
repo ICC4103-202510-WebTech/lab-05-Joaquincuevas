@@ -19,20 +19,14 @@
             <% end %>
 
             <div class="mb-3">
-              <%= form.label :sender_id, "Select Sender", class: "form-label" %>
-              <%= form.collection_select :sender_id,
-                  User.all,
-                  :id,
-                  ->(user) { "#{user.first_name} #{user.last_name} (#{user.email})" },
-                  { prompt: "Choose a sender" },
-                  { class: "form-select" }
-              %>
+              <label class="form-label">Sender</label>
+              <input type="text" class="form-control" value="<%= "#{current_user.first_name} #{current_user.last_name} (#{current_user.email})" %>" disabled>
             </div>
 
             <div class="mb-3">
               <%= form.label :receiver_id, "Select Receiver", class: "form-label" %>
               <%= form.collection_select :receiver_id,
-                  User.all,
+                  User.where.not(id: current_user.id),
                   :id,
                   ->(user) { "#{user.first_name} #{user.last_name} (#{user.email})" },
                   { prompt: "Choose a receiver" },
